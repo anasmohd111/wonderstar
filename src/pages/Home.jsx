@@ -1,0 +1,117 @@
+import React, { useState } from 'react';
+import mainvideo from '../assets/main.mp4';
+import map from '../assets//map.jpg';
+import company from '../assets/company.jpg';
+import pin from '../assets/placeholder.png';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+import CountUp from 'react-countup';
+import ScrollTrigger from 'react-scroll-trigger';
+AOS.init();
+
+function Home() {
+
+  const sectionsData = [
+    {
+      title: "Petrochemicals",
+      text: "Wonder Star LLC, a renowned petrochemical supplier based in the UAE",
+    },
+    {
+      title: "Minerals",
+      text: "Minerals play a crucial role in diverse industrial applications",
+    },
+    {
+      title: "Metals",
+      text: "Wonder Star supplies a diverse range of high quality metals to numerous countries",
+    },
+    {
+      title: "Fertilizers",
+      text: "Wonder Star specializes in sourcing and supplying high quality agricultural fertilizers globally",
+    },
+  ];
+
+  const [counterOn, setCounterOn] = useState(false);
+
+  return (
+
+    <>
+      <section className="homeSection">
+        <div className="bgVideo">
+          <video src={mainvideo} className="videoTag" autoPlay loop muted />
+        </div>
+        <div className="content section" data-aos="fade-up" data-aos-duration="2000">
+          <h1 className="title">Trade Beyond Borders! <br />
+            Trust Beyond Measure!</h1>
+
+          <button className='actionBtn'>Explore More</button>
+        </div>
+      </section>
+
+      <section className="contentSection section sectionPadding">
+        <div className="headDiv" data-aos="fade-up" data-aos-duration="2000">
+          <h3 className="title">Excellence in Commodity Trading Since 2001</h3>
+        </div>
+        <div className="contentDiv" data-aos="fade-up" data-aos-duration="3000">
+          <p className="text">Founded in 2001 and based in Dubai, UAE, Wonder Star Trading LLC has established itself as a key player in the commodity trading sector for over 23 years. We specialize in high-quality minerals, petrochemicals,fertilizers, and metals, driven by our commitment to excellence.</p>
+          <button className='actionBtn'>Learn More</button>
+        </div>
+      </section>
+
+      <div>
+        {sectionsData.map((item, index) => (
+          <section className="bannerSection section sectionPadding">
+            <div className="contentDiv" key={index}>
+              <h4 className="title">{item.title}</h4>
+              <p className="text">{item.text}</p>
+              <button className="actionBtn">Know More</button>
+            </div>
+          </section>
+        ))}
+      </div>
+
+      <section className="mapSection section">
+        <img src={map} alt="" />
+        <img src={pin} className='pin1' alt="" />
+        <img src={pin} className='pin2' alt="" />
+        <img src={pin} className='pin3' alt="" />
+        <img src={pin} className='pin4' alt="" />
+        <img src={pin} className='pin5' alt="" />
+      </section>
+
+      <section className="contentSection section sectionPaddingBottom">
+        <div className="headDiv" data-aos="fade-up" data-aos-duration="2000">
+          <h3 className="title">Delivering customized services through a local lens</h3>
+        </div>
+        <div className="contentDiv" data-aos="fade-up" data-aos-duration="3000">
+          <p className="text">With decades of experience in communities nationwide, we’re likely already your neighbors. We don’t just build and leave; we invest in our own backyards. Why? Because the strongest communities are the ones we create together.</p>
+        </div>
+      </section>
+
+      <section className="companySection section sectionPadding">
+        <div className="imgDiv">
+          <img src={company} alt="" />
+        </div>
+        <ScrollTrigger onEnter={() => setCounterOn(true)} onExit={() => setCounterOn(false)} className="contentDiv">
+          <div className="count">
+            <p className="number">{counterOn && <CountUp start={0} end={20} duration={2} delay={0} />}+
+            <span className='year'>Years Of Experiance</span></p>
+          </div>
+          <div className="count">
+          <p className="number">{counterOn && <CountUp start={0} end={100} duration={2} delay={0} />}+
+          <span className='year'>Clientele</span></p>
+          </div>
+          <div className="count">
+          <p className="number">{counterOn && <CountUp start={0} end={18} duration={2} delay={0} />}+
+          <span className='year'>Countries</span></p>
+          </div>
+          <div className="count">
+          <p className="number">{counterOn && <CountUp start={0} end={200} duration={2} delay={0} />}+
+          <span className='year'>Products</span></p>
+          </div>
+        </ScrollTrigger>
+      </section>
+    </>
+  );
+}
+
+export default Home;
