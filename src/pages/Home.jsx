@@ -38,10 +38,8 @@ function Home() {
       cursorRef.current.style.top = `${e.clientY}px`;
     };
 
-    // Attach the event listener to the entire document
     document.addEventListener('mousemove', handleMouseMove);
 
-    // Cleanup on component unmount
     return () => {
       document.removeEventListener('mousemove', handleMouseMove);
     };
@@ -72,7 +70,7 @@ function Home() {
         </div>
       </section>
 
-      <div>
+      <div id='bannerSection'>
         <section className="bannerSection section sectionPadding">
           <div ref={cursorRef} className="custom-cursor"></div>
           <div
