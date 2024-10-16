@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import mainvideo from '../assets/main.mp4';
 import map from '../assets//map.jpg';
 import company from '../assets/company.jpg';
@@ -11,26 +11,41 @@ AOS.init();
 
 function Home() {
 
-  const sectionsData = [
-    {
-      title: "Petrochemicals",
-      text: "Wonder Star LLC, a renowned petrochemical supplier based in the UAE",
-    },
-    {
-      title: "Minerals",
-      text: "Minerals play a crucial role in diverse industrial applications",
-    },
-    {
-      title: "Metals",
-      text: "Wonder Star supplies a diverse range of high quality metals to numerous countries",
-    },
-    {
-      title: "Fertilizers",
-      text: "Wonder Star specializes in sourcing and supplying high quality agricultural fertilizers globally",
-    },
-  ];
-
+  const cursorRef = useRef(null);
+  const videoRef1 = useRef(null);
+  const videoRef2 = useRef(null);
+  const videoRef3 = useRef(null);
+  const videoRef4 = useRef(null);
   const [counterOn, setCounterOn] = useState(false);
+
+  const handleMouseEnter = (videoRef) => {
+    videoRef.current.play();
+    cursorRef.current.style.transform = 'scale(1.5)';
+    cursorRef.current.style.display = 'block';
+    cursorRef.current.style.opacity = '1';
+  };
+
+  const handleMouseLeave = (videoRef) => {
+    videoRef.current.pause();
+    cursorRef.current.style.transform = 'scale(1)';
+    cursorRef.current.style.display = 'none';
+    cursorRef.current.style.opacity = '0';
+  };
+
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      cursorRef.current.style.left = `${e.clientX}px`;
+      cursorRef.current.style.top = `${e.clientY}px`;
+    };
+
+    // Attach the event listener to the entire document
+    document.addEventListener('mousemove', handleMouseMove);
+
+    // Cleanup on component unmount
+    return () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+    };
+  }, []);
 
   return (
 
@@ -58,15 +73,97 @@ function Home() {
       </section>
 
       <div>
-        {sectionsData.map((item, index) => (
-          <section className="bannerSection section sectionPadding">
-            <div className="contentDiv" key={index}>
-              <h4 className="title">{item.title}</h4>
-              <p className="text">{item.text}</p>
-              <button className="actionBtn">Know More</button>
-            </div>
-          </section>
-        ))}
+        <section className="bannerSection section sectionPadding">
+          <div ref={cursorRef} className="custom-cursor"></div>
+          <div
+            className="bgVideo"
+            onMouseEnter={() => handleMouseEnter(videoRef1)}
+            onMouseLeave={() => handleMouseLeave(videoRef1)}
+          >
+            <video
+              ref={videoRef1}
+              src={mainvideo}
+              className="videoTag"
+              loop
+              muted
+            />
+          </div>
+          <div className="contentDiv">
+            <h4 className="title">Petrochemicals</h4>
+            <p className="text">
+              Wonder Star LLC, a renowned petrochemical supplier based in the UAE
+            </p>
+            <button className="actionBtn">Know More</button>
+          </div>
+        </section>
+
+        <section className="bannerSection section sectionPadding">
+          <div ref={cursorRef} className="custom-cursor"></div>
+          <div
+            className="bgVideo"
+            onMouseEnter={() => handleMouseEnter(videoRef2)}
+            onMouseLeave={() => handleMouseLeave(videoRef2)}
+          >
+            <video
+              ref={videoRef2}
+              src={mainvideo}
+              className="videoTag"
+              loop
+              muted
+            />
+          </div>
+          <div className="contentDiv">
+            <h4 className="title">Minerals</h4>
+            <p className="text">
+              Minerals play a crucial role in diverse industrial applications
+            </p>
+            <button className="actionBtn">Know More</button>
+          </div>
+        </section>
+
+        <section className="bannerSection section sectionPadding">
+          <div ref={cursorRef} className="custom-cursor"></div>
+          <div
+            className="bgVideo"
+            onMouseEnter={() => handleMouseEnter(videoRef3)}
+            onMouseLeave={() => handleMouseLeave(videoRef3)}
+          >
+            <video
+              ref={videoRef3}
+              src={mainvideo}
+              className="videoTag"
+              loop
+              muted
+            />
+          </div>
+          <div className="contentDiv">
+            <h4 className="title">Metals</h4>
+            <p className="text">Wonder Star supplies a diverse range of high quality metals to numerous countries</p>
+            <button className="actionBtn">Know More</button>
+          </div>
+        </section>
+
+        <section className="bannerSection section sectionPadding">
+          <div ref={cursorRef} className="custom-cursor"></div>
+          <div
+            className="bgVideo"
+            onMouseEnter={() => handleMouseEnter(videoRef4)}
+            onMouseLeave={() => handleMouseLeave(videoRef4)}
+          >
+            <video
+              ref={videoRef4}
+              src={mainvideo}
+              className="videoTag"
+              loop
+              muted
+            />
+          </div>
+          <div className="contentDiv">
+            <h4 className="title">Fertilizers</h4>
+            <p className="text">Wonder Star specializes in sourcing and supplying high quality agricultural fertilizers globally</p>
+            <button className="actionBtn">Know More</button>
+          </div>
+        </section>
       </div>
 
       <section className="mapSection section">
@@ -78,7 +175,7 @@ function Home() {
         <img src={pin} className='pin5' alt="" />
       </section>
 
-      <section className="contentSection section sectionPaddingBottom">
+      <section className="contentSection contentSection1 section sectionPaddingBottom">
         <div className="headDiv" data-aos="fade-up" data-aos-duration="2000">
           <h3 className="title">Delivering customized services through a local lens</h3>
         </div>
@@ -94,19 +191,19 @@ function Home() {
         <ScrollTrigger onEnter={() => setCounterOn(true)} onExit={() => setCounterOn(false)} className="contentDiv">
           <div className="count">
             <p className="number">{counterOn && <CountUp start={0} end={20} duration={2} delay={0} />}+
-            <span className='year'>Years Of Experiance</span></p>
+              <span className='year'>Years Of Experiance</span></p>
           </div>
           <div className="count">
-          <p className="number">{counterOn && <CountUp start={0} end={100} duration={2} delay={0} />}+
-          <span className='year'>Clientele</span></p>
+            <p className="number">{counterOn && <CountUp start={0} end={100} duration={2} delay={0} />}+
+              <span className='year'>Clientele</span></p>
           </div>
           <div className="count">
-          <p className="number">{counterOn && <CountUp start={0} end={18} duration={2} delay={0} />}+
-          <span className='year'>Countries</span></p>
+            <p className="number">{counterOn && <CountUp start={0} end={18} duration={2} delay={0} />}+
+              <span className='year'>Countries</span></p>
           </div>
           <div className="count">
-          <p className="number">{counterOn && <CountUp start={0} end={200} duration={2} delay={0} />}+
-          <span className='year'>Products</span></p>
+            <p className="number">{counterOn && <CountUp start={0} end={200} duration={2} delay={0} />}+
+              <span className='year'>Products</span></p>
           </div>
         </ScrollTrigger>
       </section>
